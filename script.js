@@ -1,4 +1,7 @@
-// --- 1. Xử lý Bật / Tắt Nhạc Nền ---
+let currentLanguage = 'vi';
+let isMusicPlaying = false;
+
+// --- 1. Phát / Dừng Nhạc ---
 function toggleMusic() {
     const music = document.getElementById('bgMusic');
     const btn = document.getElementById('musicToggleBtn');
@@ -7,48 +10,84 @@ function toggleMusic() {
     if (!music) return;
 
     if (music.paused) {
-        music.play().then(() => {
-            btn.classList.add('playing');
-            text.textContent = 'Tắt nhạc';
-        }).catch(err => {
-            console.log("Trình duyệt chặn autoplay:", err);
-        });
+        music.load();
+        const playPromise = music.play();
+
+        if (playPromise !== undefined) {
+            playPromise.then(() => {
+                isMusicPlaying = true;
+                btn.classList.add('playing');
+                text.textContent = currentLanguage === 'vi' ? 'Tắt nhạc' : 'Stop Music';
+            }).catch(err => {
+                console.error("Lỗi phát nhạc:", err);
+            });
+        }
     } else {
+        isMusicPlaying = false;
         music.pause();
         btn.classList.remove('playing');
-        text.textContent = 'Bật nhạc';
+        text.textContent = currentLanguage === 'vi' ? 'Bật nhạc' : 'Play Music';
     }
 }
 
-// --- 2. Xử lý Mở / Đóng Phong Thư Tri Ân ---
-function openEnvelope() {
-    const wrapper = document.getElementById('envelopeWrapper');
-    const btn = document.querySelector('.open-btn');
-    const fullMessage = document.querySelector('.full-message');
+// --- 2. Đổi Ngôn Ngữ ---
+function toggleLanguage() {
+    currentLanguage = currentLanguage === 'vi' ? 'en' : 'vi';
+    document.documentElement.lang = currentLanguage;
 
-    if (!wrapper) return;
+    const langLabel = document.getElementById('langText');
+    if (langLabel) {
+        langLabel.textContent = currentLanguage === 'vi' ? 'EN' : 'VI';
+    }
 
-    wrapper.classList.toggle('open');
+    const elements = document.querySelectorAll('[data-vi][data-en]');
+    elements.forEach(el => {
+        el.innerHTML = el.getAttribute(`data-${currentLanguage}`);
+    });
 
-    if (wrapper.classList.contains('open')) {
-        if (btn) btn.textContent = 'CLOSE LETTER 🤍';
-        
-        if (fullMessage) {
-            fullMessage.style.display = 'block';
+    const letter = document.getElementById("fullMessage");
+    const letterBtn = document.getElementById("openLetterBtn");
+    if (letter && letterBtn) {
+        if (letter.style.display === "block") {
+            letterBtn.textContent = currentLanguage === 'vi' ? "ĐÓNG THƯ TRI ÂN ✖" : "CLOSE LETTER ✖";
+        } else {
+            letterBtn.textContent = currentLanguage === 'vi' ? "MỞ THƯ TRI ÂN ✨" : "OPEN LETTER ✨";
         }
+    }
 
-        setTimeout(() => {
-            if (fullMessage) {
-                fullMessage.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }
-        }, 500);
-    } else {
-        if (btn) btn.textContent = 'OPEN LETTER ✨';
-        wrapper.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    const musicText = document.getElementById('musicText');
+    if (musicText) {
+        if (isMusicPlaying) {
+            musicText.textContent = currentLanguage === 'vi' ? 'Tắt nhạc' : 'Stop Music';
+        } else {
+            musicText.textContent = currentLanguage === 'vi' ? 'Bật nhạc' : 'Play Music';
+        }
     }
 }
 
-// --- 3. Xử lý Chuyển Tab (3 Nút Navigation) ---
+// --- 3. Đóng/Mở Thư ---
+function toggleLetter() {
+    const letter = document.getElementById("fullMessage");
+    const btn = document.getElementById("openLetterBtn");
+
+    if (!letter || !btn) return;
+
+    if (letter.style.display === "none" || letter.style.display === "") {
+        letter.style.display = "block";
+        btn.textContent = currentLanguage === 'vi' ? "ĐÓNG THƯ TRI ÂN ✖" : "CLOSE LETTER ✖";
+        
+        setTimeout(() => {
+            letter.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 100);
+    } else {
+        letter.style.display = "none";
+        btn.textContent = currentLanguage === 'vi' ? "MỞ THƯ TRI ÂN ✨" : "OPEN LETTER ✨";
+        
+        btn.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+}
+
+// --- 4. Chuyển Tab ---
 function scrollToSection(tabId) {
     const allTabs = document.querySelectorAll('.tab-content');
     allTabs.forEach(tab => {
@@ -69,15 +108,6 @@ function scrollToSection(tabId) {
         window.event.currentTarget.classList.add('active-btn');
     }
 
-    if (tabId === 'messageCard') {
-        const wrapper = document.getElementById('envelopeWrapper');
-        const btn = document.querySelector('.open-btn');
-        if (wrapper && wrapper.classList.contains('open')) {
-            wrapper.classList.remove('open');
-            if (btn) btn.textContent = 'OPEN LETTER ✨';
-        }
-    }
-
     setTimeout(() => {
         if (selectedTab) {
             selectedTab.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -85,48 +115,22 @@ function scrollToSection(tabId) {
     }, 150);
 }
 
-// --- 4. Lightbox Xem Ảnh Gallery ---
-function openLightbox(element) {
-    const lightbox = document.getElementById('lightbox');
+// --- 5. Lightbox Mở Phóng To (Dùng cho cả Ảnh Chân Dung và Sơ đồ) ---
+function openLightbox(imageSrc) {
+    const lightbox = document.getElementById('imageLightbox');
     const lightboxImg = document.getElementById('lightboxImg');
-    const img = element.querySelector('img');
-    
-    if (lightbox && lightboxImg && img) {
-        lightboxImg.src = img.src;
+
+    if (lightbox && lightboxImg) {
+        lightboxImg.src = imageSrc;
         lightbox.classList.add('active');
+        document.body.style.overflow = 'hidden';
     }
 }
 
 function closeLightbox() {
-    const lightbox = document.getElementById('lightbox');
+    const lightbox = document.getElementById('imageLightbox');
     if (lightbox) {
         lightbox.classList.remove('active');
+        document.body.style.overflow = '';
     }
 }
-
-// --- 5. Lightbox Xem Ảnh Chân Dung ---
-function openPortraitLightbox() {
-    const lightbox = document.getElementById('portraitLightbox');
-    const lightboxImg = document.getElementById('portraitLightboxImg');
-    const mainImg = document.getElementById('mainPortrait');
-    
-    if (lightbox && lightboxImg && mainImg) {
-        lightboxImg.src = mainImg.src;
-        lightbox.classList.add('active');
-    }
-}
-
-function closePortraitLightbox() {
-    const lightbox = document.getElementById('portraitLightbox');
-    if (lightbox) {
-        lightbox.classList.remove('active');
-    }
-}
-
-// --- 6. Gán sự kiện khi DOM Ready ---
-document.addEventListener('DOMContentLoaded', () => {
-    const envelopeWrapper = document.getElementById('envelopeWrapper');
-    if (envelopeWrapper) {
-        envelopeWrapper.addEventListener('click', openEnvelope);
-    }
-});

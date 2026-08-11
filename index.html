@@ -4,19 +4,29 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Ngô Thanh Như | Graduation 2026</title>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
+    <!-- NÚT CHUYỂN ĐỔI NGÔN NGỮ VI/EN -->
+    <button id="langToggleBtn" class="lang-btn" onclick="toggleLanguage()">
+        <span id="langText">EN</span>
+    </button>
 
     <!-- NÚT BẬT/TẮT NHẠC NỀN -->
     <button id="musicToggleBtn" class="music-btn" onclick="toggleMusic()">
-        🎵 <span id="musicText">Bật nhạc</span>
+        🎵 <span id="musicText" data-vi="Bật nhạc" data-en="Play Music">Bật nhạc</span>
     </button>
 
     <!-- FILE NHẠC NỀN -->
     <audio id="bgMusic" loop preload="auto">
-        <source src="bg-music.mp3" type="audio/mpeg">
+        <source src="music/244. Graduation.mp3" type="audio/mpeg">
         Trình duyệt của bạn không hỗ trợ phát nhạc nền.
     </audio>
 
@@ -25,39 +35,46 @@
         <div class="hero-container">
             <!-- Nửa bên trái: Ảnh Chân Dung -->
             <div class="hero-left">
-                <div class="portrait-avatar clickable" onclick="openPortraitLightbox()">
+                <div class="portrait-avatar clickable" onclick="openLightbox('images/profile.jpg')">
                     <img src="images/profile.jpg" alt="Ngô Thanh Như" id="mainPortrait">
                     <div class="portrait-overlay">
                         <span class="zoom-icon">🔍</span>
-                        <p>Phóng to</p>
+                        <p data-vi="Phóng to" data-en="Zoom in">Phóng to</p>
                     </div>
                 </div>
             </div>
 
             <!-- Nửa bên phải: Thông tin -->
             <div class="hero-right">
-                <p class="subtitle">GRADUATION INVITATION</p>
-                <h1>Graduation 2026</h1>
+                <p class="subtitle" data-vi="THƯ MỜI TỐT NGHIỆP" data-en="GRADUATION INVITATION">THƯ MỜI TỐT NGHIỆP</p>
+                <h1 data-vi="Lễ Tốt Nghiệp 2026" data-en="Graduation 2026">Lễ Tốt Nghiệp 2026</h1>
                 <h2>Ngô Thanh Như</h2>
 
                 <div class="quick-info">
-                    <p>🕒 <strong>09:30 AM - 11:30 AM</strong></p>
-                    <p>📅 <strong>Thứ Hai, ngày 07 tháng 09 năm 2026</strong></p>
-                    <p>📍 <strong>Đại học Y Dược TP.HCM</strong> (217 Hồng Bàng, P. Chợ Lớn, TP.HCM)</p>
+                    <p>🕒 <strong>11:30 AM - 13:00 AM</strong></p>
+                    <p>📅 <strong data-vi="Thứ Hai, ngày 07 tháng 09 năm 2026" data-en="Monday, September 07, 2026">Thứ Hai, ngày 07 tháng 09 năm 2026</strong></p>
+                    <p>📍 <strong data-vi="Đại học Y Dược TP.HCM" data-en="University of Medicine and Pharmacy at HCMC">Đại học Y Dược TP.HCM</strong> <span data-vi="(217 Hồng Bàng, P. Chợ Lớn, TP.HCM)" data-en="(217 Hong Bang, Cho Lon Ward, HCMC)">(217 Hồng Bàng, P. Chợ Lớn, TP.HCM)</span></p>
+
+                    <!-- NÚT MỞ SƠ ĐỒ ĐẠI HỌC -->
+                    <div class="map-button-wrapper">
+                        <button class="map-btn" onclick="openLightbox('images/sodo.png')" data-vi="🗺️ Sơ đồ Đại học" data-en="🗺️ University Campus Map">
+                            🗺️ Sơ đồ Đại học
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Menu 3 nút bấm chuyển trang -->
         <div class="navigation-menu">
-            <button class="nav-btn active-btn" onclick="scrollToSection('messageCard')">
-                💌 A Message to You
+            <button class="nav-btn active-btn" onclick="scrollToSection('messageCard')" data-vi="💌 Lời Nhắn Gửi" data-en="💌 A Message to You">
+                💌 Lời Nhắn Gửi
             </button>
-            <button class="nav-btn" onclick="scrollToSection('galleryCard')">
-                📸 Graduation Moments
+            <button class="nav-btn" onclick="scrollToSection('galleryCard')" data-vi="📸 Khoảnh Khắc" data-en="📸 Photo Gallery">
+                📸 Khoảnh Khắc
             </button>
-            <button class="nav-btn" onclick="scrollToSection('guestbookCard')">
-                📖 Guestbook
+            <button class="nav-btn" onclick="scrollToSection('guestbookCard')" data-vi="📖 Lưu Bút" data-en="📖 Guestbook">
+                📖 Lưu Bút
             </button>
         </div>
     </section>
@@ -67,81 +84,73 @@
 
         <!-- 1. TRANG MESSAGE -->
         <div class="card message-card tab-content active-tab" id="messageCard">
-            <h3 class="section-title">A Message to You</h3>
+            <h3 class="section-title" data-vi="Lời Nhắn Gửi" data-en="A Message to You">Lời Nhắn Gửi</h3>
 
-            <div class="envelope-wrapper" id="envelopeWrapper">
-                <div class="envelope">
-                    <div class="flap"></div>
-                    <div class="pocket"></div>
-                    <div class="letter">
-                        <div class="letter-content">
-                            <div class="heart-icon">💙</div>
-                            <h3>Lời Tri Ân</h3>
-                            <p class="signature">Ngô Thanh Như</p>
-                        </div>
-                    </div>
-                </div>
+            <div style="text-align: center; margin-bottom: 30px; margin-top: 20px;">
+                <button id="openLetterBtn" class="open-btn" onclick="toggleLetter()" data-vi="MỞ THƯ ✨" data-en="OPEN LETTER ✨">MỞ THƯ ✨</button>
             </div>
 
-            <div style="text-align: center; margin-bottom: 30px;">
-                <button class="open-btn" onclick="openEnvelope()">OPEN LETTER ✨</button>
+            <div class="full-message" id="fullMessage" style="display: none;">
+                <p data-vi="Hôm nay, khi khép lại quãng đời sinh viên tại Đại học Y Dược Thành phố Hồ Chí Minh, mình muốn dành những dòng này để gửi lời cảm ơn chân thành đến tất cả những người đã đồng hành cùng mình trên hành trình trưởng thành." 
+                   data-en="As my time at the University of Medicine and Pharmacy in Ho Chi Minh City comes to an end, I want to dedicate these lines to express my sincere gratitude to everyone who has accompanied me on my journey of growth.">
+                   Hôm nay, khi khép lại quãng đời sinh viên tại Đại học Y Dược Thành phố Hồ Chí Minh, mình muốn dành những dòng này để gửi lời cảm ơn chân thành đến tất cả những người đã đồng hành cùng mình trên hành trình trưởng thành.
+                </p>
+
+                <p data-vi="Cảm ơn gia đình, cảm ơn ba mẹ, cảm ơn các bác, các cô, các chú đã luôn là điểm tựa vững chắc, âm thầm yêu thương, động viên và tin tưởng con trong mọi quyết định." 
+                   data-en="I am deeply grateful to my family, my parents, aunts, and uncles for always being my strong support, loving and encouraging me quietly, and trusting me in every decision.">
+                   Cảm ơn gia đình, cảm ơn ba mẹ, cảm ơn các bác, các cô, các chú đã luôn là điểm tựa vững chắc, âm thầm yêu thương, động viên và tin tưởng con trong mọi quyết định.
+                </p>
+
+                <p data-vi="Cảm ơn những người bạn đã cùng mình trải qua biết bao buổi học, kỳ thi, những ngày thực tập, những lần thức khuya hoàn thành bài tập và cả những khoảnh khắc vui buồn của tuổi trẻ. Chính sự đồng hành ấy đã khiến những năm tháng đại học của mình trở thành những ký ức thật đẹp." 
+                   data-en="Thank you to my friends who have been with me through countless classes, exams, internships, late nights finishing assignments, and all the ups and downs of youth. Your companionship has turned my university years into beautiful memories.">
+                   Cảm ơn những người bạn đã cùng mình trải qua biết bao buổi học, kỳ thi, những ngày thực tập, những lần thức khuya hoàn thành bài tập và cả những khoảnh khắc vui buồn của tuổi trẻ. Chính sự đồng hành ấy đã khiến những năm tháng đại học của mình trở thành những ký ức thật đẹp.
+                </p>
+
+                <p data-vi="Dù chúng ta gặp nhau trong một giai đoạn rất ngắn hay đã đồng hành cùng nhau suốt nhiều năm. Dù là ai, dù là khoảng thời gian nào đi nữa, mình luôn biết ơn vì bạn đã trở thành một phần trong hành trình trưởng thành của mình." 
+                   data-en="Whether our paths crossed for a brief moment or we have walked together for years, whoever you are and however long we shared, I am always grateful that you became a part of my journey.">
+                   Dù chúng ta gặp nhau trong một giai đoạn rất ngắn hay đã đồng hành cùng nhau suốt nhiều năm. Dù là ai, dù là khoảng thời gian nào đi nữa, mình luôn biết ơn vì bạn đã trở thành một phần trong hành trình trưởng thành của mình.
+                </p>
+
+                <p data-vi="Chặng đường đại học khép lại không phải là dấu chấm hết, mà là một cột mốc mở ra những hành trình mới. Mình hy vọng sẽ luôn mang theo những điều tốt đẹp đã nhận được để tiếp tục học hỏi, cống hiến và sống xứng đáng với niềm tin của những người yêu thương mình." 
+                   data-en="The end of university is not a conclusion but a milestone opening up new journeys. I hope to always carry the good things I have received to continue learning, contributing, and living worthy of the trust of those who love me.">
+                   Chặng đường đại học khép lại không phải là dấu chấm hết, mà là một cột mốc mở ra những hành trình mới. Mình hy vọng sẽ luôn mang theo những điều tốt đẹp đã nhận được để tiếp tục học hỏi, cống hiến và sống xứng đáng với niềm tin của những người yêu thương mình.
+                </p>
+
+                <p class="thank-you-line" data-vi="Cảm ơn rất nhiều!" data-en="Thank you so much!">Cảm ơn rất nhiều!</p>
+                <p class="closing-tag">— Ngô Thanh Như —</p>
             </div>
-
-            <!-- Bài thư tri ân chi tiết -->
-            <div class="full-message">
-                <p>Hôm nay, khi khép lại quãng đời sinh viên tại Đại học Y Dược Thành phố Hồ Chí Minh, mình muốn dành những dòng này để gửi lời cảm ơn chân thành đến tất cả những người đã đồng hành cùng mình trên hành trình trưởng thành.</p>
-
-                <p>Cảm ơn gia đình, cảm ơn ba mẹ, cảm ơn các bác, các cô, các chú đã luôn là điểm tựa vững chắc, âm thầm yêu thương, động viên và tin tưởng con trong mọi quyết định.</p>
-
-                <p>Cảm ơn những người bạn đã cùng mình trải qua biết bao buổi học, kỳ thi, những ngày thực tập, những lần thức khuya hoàn thành bài tập và cả những khoảnh khắc vui buồn của tuổi trẻ. Chính sự đồng hành ấy đã khiến những năm tháng đại học của mình trở thành những ký ức thật đẹp.</p>
-
-                <p>Dù chúng ta gặp nhau trong một giai đoạn rất ngắn hay đã đồng hành cùng nhau suốt nhiều năm. Dù là ai, dù là khoảng thời gian nào đi nữa, mình luôn biết ơn vì bạn đã trở thành một phần trong hành trình trưởng thành của mình.</p>
-
-                <p>Chặng đường đại học khép lại không phải là dấu chấm hết, mà là một cột mốc mở ra những hành trình mới. Mình hy vọng sẽ luôn mang theo những điều tốt đẹp đã nhận được để tiếp tục học hỏi, cống hiến và sống xứng đáng với niềm tin của những người yêu thương mình.</p>
-
-                <p class="thank-you-line">Cảm ơn rất nhiều!</p>
-            </div>
-
-            <p class="closing-tag">— Ngô Thanh Như —</p>
         </div>
 
-        <!-- 2. TRANG GALLERY (ALBUM ẢNH) -->
+        <!-- 2. TRANG GALLERY -->
         <div class="card gallery-card tab-content" id="galleryCard">
-            <h3 class="section-title">Graduation Moments 📸</h3>
-            <p class="gallery-subtitle">Những khoảnh khắc đáng nhớ trong hành trình thanh xuân</p>
+            <h3 class="section-title" data-vi="Khoảnh Khắc Tốt Nghiệp 📸" data-en="Photo Gallery 📸">Khoảnh Khắc Tốt Nghiệp 📸</h3>
+            <p class="gallery-subtitle" data-vi="Các khoảnh khắc kỷ niệm sẽ được update sau tại đây nhé!" data-en="Graduation moments and photos will be updated here later!">Các khoảnh khắc kỷ niệm sẽ được update sau tại đây nhé!</p>
 
-            <div class="gallery-grid" id="galleryGrid">
-                <div class="gallery-item" onclick="openLightbox(this)">
-                    <img src="images/profile.jpg" alt="Ngô Thanh Như">
-                </div>
+            <div style="text-align: center; margin-top: 30px;">
+                <a href="https://drive.google.com/drive/folders/1lnJfNZBkXbl00ybK8usQnBeyX3-34wlV?usp=drive_link" target="_blank" rel="noopener noreferrer" class="open-btn" style="text-decoration: none; display: inline-block;">
+                    <span data-vi="TRUY CẬP GOOGLE DRIVE ẢNH 📂" data-en="ACCESS PHOTO DRIVE 📂">TRUY CẬP GOOGLE DRIVE ẢNH 📂</span>
+                </a>
             </div>
         </div>
 
         <!-- 3. TRANG GUESTBOOK -->
         <div class="card guestbook-card tab-content" id="guestbookCard">
-            <h3 class="section-title">Guestbook 📖</h3>
-            <p class="gallery-subtitle">Hãy gửi cho Như một vài dòng tâm tư hay lời nhắn nhé!</p>
+            <h3 class="section-title" data-vi="Lưu Bút 📖" data-en="Guestbook 📖">Lưu Bút 📖</h3>
+            <p class="gallery-subtitle" data-vi="Hãy gửi cho Như một vài dòng tâm tư hay lời nhắn nhé!" data-en="Please leave a few words or messages for Nhu!">Hãy gửi cho Như một vài dòng tâm tư hay lời nhắn nhé!</p>
 
-            <!-- Nút liên kết Google Form -->
             <div class="guestbook-action">
-                <a href="https://forms.gle/P8Sx6W2TdXy56CAG7" target="_blank" rel="noopener noreferrer" class="open-btn form-link-btn">
-                    GỬI LỜI NHẮN CHO NHƯ 📝
+                <a href="https://forms.gle/P8Sx6W2TdXy56CAG7" target="_blank" rel="noopener noreferrer" class="open-btn form-link-btn" style="text-decoration: none; display: inline-block;">
+                    <span data-vi="GỬI LỜI NHẮN CHO NHƯ 📝" data-en="SEND A MESSAGE 📝">GỬI LỜI NHẮN CHO NHƯ 📝</span>
                 </a>
-                <p class="form-hint">* Chia sẻ của bạn sẽ được gửi trực tiếp đến Như qua Google Form</p>
             </div>
         </div>
 
     </section>
 
     <!-- HỘP THOẠI PHÓNG TO ẢNH (LIGHTBOX) -->
-    <div class="lightbox" id="lightbox" onclick="closeLightbox()">
+    <div class="lightbox" id="imageLightbox" onclick="closeLightbox()">
         <span class="lightbox-close">&times;</span>
-        <img class="lightbox-content" id="lightboxImg">
-    </div>
-
-    <div class="lightbox" id="portraitLightbox" onclick="closePortraitLightbox()">
-        <span class="lightbox-close">&times;</span>
-        <img class="lightbox-content" id="portraitLightboxImg">
+        <img class="lightbox-content" id="lightboxImg" alt="Xem ảnh phóng to">
     </div>
 
     <script src="script.js"></script>

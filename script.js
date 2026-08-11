@@ -49,9 +49,9 @@ function toggleLanguage() {
     const letterBtn = document.getElementById("openLetterBtn");
     if (letter && letterBtn) {
         if (letter.style.display === "block") {
-            letterBtn.textContent = currentLanguage === 'vi' ? "ĐÓNG THƯ TRI ÂN ✖" : "CLOSE LETTER ✖";
+            letterBtn.textContent = currentLanguage === 'vi' ? "ĐÓNG THƯ ✖" : "CLOSE LETTER ✖";
         } else {
-            letterBtn.textContent = currentLanguage === 'vi' ? "MỞ THƯ TRI ÂN ✨" : "OPEN LETTER ✨";
+            letterBtn.textContent = currentLanguage === 'vi' ? "MỞ THƯ ✨" : "OPEN LETTER ✨";
         }
     }
 
@@ -74,14 +74,14 @@ function toggleLetter() {
 
     if (letter.style.display === "none" || letter.style.display === "") {
         letter.style.display = "block";
-        btn.textContent = currentLanguage === 'vi' ? "ĐÓNG THƯ TRI ÂN ✖" : "CLOSE LETTER ✖";
+        btn.textContent = currentLanguage === 'vi' ? "ĐÓNG THƯ ✖" : "CLOSE LETTER ✖";
         
         setTimeout(() => {
             letter.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }, 100);
     } else {
         letter.style.display = "none";
-        btn.textContent = currentLanguage === 'vi' ? "MỞ THƯ TRI ÂN ✨" : "OPEN LETTER ✨";
+        btn.textContent = currentLanguage === 'vi' ? "MỞ THƯ ✨" : "OPEN LETTER ✨";
         
         btn.scrollIntoView({ behavior: 'smooth', block: 'center' });
     }

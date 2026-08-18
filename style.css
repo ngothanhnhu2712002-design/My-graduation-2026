@@ -91,13 +91,12 @@ body {
 
 /* Chi tiết cành lá trang trí góc card */
 .hero-container::before {
-    content: "🌿";
+    content: "🍀";
     position: absolute;
     top: 15px;
     right: 20px;
     font-size: 2rem;
     opacity: 0.3;
-    transform: rotate(45deg);
 }
 
 /* --- Khung Ảnh Dạng Vòm (Arch Profile) --- */
